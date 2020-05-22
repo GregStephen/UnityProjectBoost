@@ -6,11 +6,13 @@ public class Rocket : MonoBehaviour
 {
 
     Rigidbody rigidBody;
+    AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
         
     }
 
@@ -25,15 +27,22 @@ public class Rocket : MonoBehaviour
         if (Input.GetKey(KeyCode.Space)) // can thrust while rotating
         {
             rigidBody.AddRelativeForce(Vector3.up);
-           
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
+        }
+        else
+        {
+            audioSource.Stop();
         }
         if (Input.GetKey(KeyCode.A))
         {
-            print("Rotating left");
+            transform.Rotate(Vector3.forward);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            print("Rotating right");
+            transform.Rotate(Vector3.back);
         }
     }
 }
